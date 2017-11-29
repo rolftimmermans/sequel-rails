@@ -45,6 +45,7 @@ namespace sequel_rails_namespace do
   namespace :structure do
     desc 'Dump the database structure to db/structure.sql'
     task :dump, [:env] => :environment do |_t, args|
+      db_for_current_env
       args.with_defaults(:env => Rails.env)
 
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, 'db', 'structure.sql')
@@ -126,6 +127,7 @@ namespace sequel_rails_namespace do
   namespace :migrate do
     task :load => :environment do
       require 'sequel_rails/migrations'
+      db_for_current_env
     end
 
     desc 'Rollbacks the database one migration and re migrate up. If you want to rollback more than one step, define STEP=x. Target specific version with VERSION=x.'
