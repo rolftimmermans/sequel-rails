@@ -53,6 +53,7 @@ end
 begin
   require 'sequel_rails/storage'
   require 'sequel/extensions/migration'
+  ::SequelRails.setup(Rails.env)
   load "#{Rails.root}/db/schema.rb.init"
   Sequel::Migration.descendants.first.apply Sequel::Model.db, :up
 rescue Sequel::DatabaseConnectionError => e
