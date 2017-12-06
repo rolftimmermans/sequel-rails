@@ -68,7 +68,7 @@ module SequelRails
     end
 
     initializer 'sequel.connect' do |app|
-      ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect] or defined?(::Rake)
+      ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect] or $rails_rake_task
     end
 
     initializer 'sequel.spring' do |_app|
