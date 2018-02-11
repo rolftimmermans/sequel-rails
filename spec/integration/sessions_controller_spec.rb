@@ -4,7 +4,12 @@ describe SessionsController, :type => :request do
   let(:session_class) { ::ActionDispatch::Session::SequelStore.session_class }
 
   def login
-    post '/session', :status => 'logged_in'
+    opts = if ActionPack::VERSION::MAJOR >= 5
+      {params: {:status => 'logged_in'}}
+    else
+      {:status => 'logged_in'}
+    end
+    post '/session', opts
   end
 
   describe '#create' do

@@ -1,3 +1,11 @@
+dev
+===
+
+* Update controller tests to cope with `ActionDispatch::IntegrationTest`
+  params handling change.
+* Fix db:create rake tasks (Rolf Timmermans)
+  [#145](https://github.com/TalentBox/sequel-rails/pull/145)
+
 1.0.0 (2017-11-20)
 ==================
 

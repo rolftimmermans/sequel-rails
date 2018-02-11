@@ -401,6 +401,7 @@ Improvements have been made by those awesome contributors:
 * Steve Hoeksema (@steveh)
 * Jester (@Jesterovskiy)
 * ckoenig (@ckoenig)
+* Rolf Timmermans (@rolftimmermans)
 
 Credits
 =======
