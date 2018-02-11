@@ -10,7 +10,11 @@ gem 'fakefs', '0.11.2', :require => 'fakefs/safe'
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do
-  gem 'pg'
+  if ENV["SEQUEL"].to_f < 4
+    gem 'pg', '< 1.0.0'
+  else
+    gem 'pg'
+  end
   if RUBY_VERSION < '2.4'
     gem 'mysql'
   end
