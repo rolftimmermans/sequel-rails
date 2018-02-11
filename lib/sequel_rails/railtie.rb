@@ -38,12 +38,16 @@ module SequelRails
 
     rake_tasks do |app|
       load_tasks_config = app.config.sequel.load_database_tasks
+
       SequelRails::TASK_NAMESPACE =
         case load_tasks_config
         when Symbol, String then load_tasks_config.to_sym
         else :db
         end
+
       load 'sequel_rails/railties/database.rake' if load_tasks_config
+
+      check_skip_connect_conditions(app)
     end
 
     initializer 'sequel.load_hooks' do
@@ -68,7 +72,7 @@ module SequelRails
     end
 
     initializer 'sequel.connect' do |app|
-      ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect] or $0 =~ /rake/
+      ::SequelRails.setup(::Rails.env) if database_connection_required?(app)
     end
 
     initializer 'sequel.spring' do |_app|
@@ -104,6 +108,18 @@ module SequelRails
     def setup_controller_runtime
       require 'sequel_rails/railties/controller_runtime'
       ActionController::Base.send :include, SequelRails::Railties::ControllerRuntime
+    end
+
+    def check_skip_connect_conditions(app)
+      app.config.sequel[:skip_connect] ||= database_create_command?
+    end
+
+    def database_connection_required?(app)
+      !app.config.sequel[:skip_connect]
+    end
+
+    def database_create_command?
+      ARGV.include?("db:create")
     end
   end
 end
