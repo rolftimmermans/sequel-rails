@@ -5,6 +5,7 @@ rvm:
   - 2.2.7
   - 2.3.4
   - 2.4.2
+  - 2.5.0
   - jruby-9.0.5.0
   - jruby-9.1.13.0
 before_script:
@@ -34,6 +35,10 @@ matrix:
     - rvm: 2.4.2
       gemfile: ci/rails-4.0.gemfile
     - rvm: 2.4.2
+      gemfile: ci/rails-4.1.gemfile
+    - rvm: 2.5.0
+      gemfile: ci/rails-4.0.gemfile
+    - rvm: 2.5.0
       gemfile: ci/rails-4.1.gemfile
 notifications:
   email:
