@@ -23,8 +23,6 @@ gemfile:
   - ci/rails-5.0.gemfile
   - ci/rails-5.1.gemfile
 matrix:
-  allow_failures:
-    - rvm: jruby-9.1.16.0
   exclude:
     - rvm: 2.4.2
       gemfile: ci/rails-4.0.gemfile
