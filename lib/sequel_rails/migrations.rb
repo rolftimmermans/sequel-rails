@@ -6,7 +6,13 @@ module SequelRails
       def migrate(version = nil)
         opts = {}
         opts[:target] = version.to_i if version
-        ::Sequel::Migrator.run(::Sequel::Model.db, migrations_dir, opts)
+
+        if migrations_dir.directory?
+          ::Sequel::Migrator.run(::Sequel::Model.db, migrations_dir, opts)
+        else
+          relative_path_name = migrations_dir.relative_path_from(Rails.root).to_s
+          raise "The #{relative_path_name} directory doesn't exist, you need to create it."
+        end
       end
       alias_method :migrate_up!, :migrate
       alias_method :migrate_down!, :migrate
