@@ -22,11 +22,17 @@ namespace sequel_rails_namespace do
     task :dump => :environment do
       db_for_current_env.extension :schema_dumper
       filename = ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb"
-      File.open filename, 'w' do |file|
-        file << db_for_current_env.dump_schema_migration(:same_db => true)
-        file << SequelRails::Migrations.dump_schema_information(:sql => false)
+
+      if Rails.root.join("db").exist?
+        File.open filename, 'w' do |file|
+          file << db_for_current_env.dump_schema_migration(:same_db => true)
+          file << SequelRails::Migrations.dump_schema_information(:sql => false)
+        end
+
+        Rake::Task["#{sequel_rails_namespace}:schema:dump"].reenable
+      else
+        abort "The db/ directory doesn't exist, please create it."
       end
-      Rake::Task["#{sequel_rails_namespace}:schema:dump"].reenable
     end
 
     desc 'Load a schema.rb file into the database'
