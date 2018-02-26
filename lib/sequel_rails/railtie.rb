@@ -119,7 +119,7 @@ module SequelRails
     end
 
     def database_create_command?
-      ARGV.include?("db:create")
+      ["db:create", "db:create:all"].any? { |c| ARGV.include?(c) }
     end
   end
 end
