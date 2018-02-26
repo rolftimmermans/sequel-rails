@@ -402,6 +402,7 @@ Improvements have been made by those awesome contributors:
 * Jester (@Jesterovskiy)
 * ckoenig (@ckoenig)
 * Rolf Timmermans (@rolftimmermans)
+* Olivier Lacan (@olivierlacan)
 
 Credits
 =======

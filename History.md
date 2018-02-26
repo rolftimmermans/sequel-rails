@@ -1,6 +1,16 @@
 dev
 ===
 
+* Check that db/ exists before running db:schema:load (Olivier Lacan)
+  [#157](https://github.com/TalentBox/sequel-rails/pull/157)
+* Raise useful exception when db/migrate directory is absent (Olivier Lacan)
+  [#156](https://github.com/TalentBox/sequel-rails/pull/156)
+* Test Ruby 2.5.0 on Travis CI (Olivier Lacan)
+  [#155](https://github.com/TalentBox/sequel-rails/pull/155)
+* Fix Sequel::DatabaseConnectionError on db:create:all task (Olivier Lacan)
+  [#154](https://github.com/TalentBox/sequel-rails/pull/154)
+* Enable skip_connect in db:create rake task (Olivier Lacan)
+  [#148](https://github.com/TalentBox/sequel-rails/pull/148)
 * Update controller tests to cope with `ActionDispatch::IntegrationTest`
   params handling change.
 * Fix db:create rake tasks (Rolf Timmermans)
