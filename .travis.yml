@@ -30,7 +30,6 @@ matrix:
       gemfile: ci/rails-4.2.gemfile
     - rvm: jruby-9.0.5.0
       gemfile: ci/rails-5.0.gemfile
-    - gemfile: ci/rails-5.1.gemfile
   exclude:
     - rvm: 2.4.2
       gemfile: ci/rails-4.0.gemfile
