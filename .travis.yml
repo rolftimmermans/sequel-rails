@@ -24,9 +24,9 @@ gemfile:
   - ci/rails-5.1.gemfile
 matrix:
   exclude:
-    - rvm: 2.4.2
+    - rvm: 2.4.3
       gemfile: ci/rails-4.0.gemfile
-    - rvm: 2.4.2
+    - rvm: 2.4.3
       gemfile: ci/rails-4.1.gemfile
     - rvm: 2.5.0
       gemfile: ci/rails-4.0.gemfile
