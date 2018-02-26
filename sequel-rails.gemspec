@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '>= 0.8.7', '< 12.1'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'rspec-rails', '~> 3.1', '< 3.6'
-  s.add_development_dependency 'rubocop', '~> 0.50.0'
+  s.add_development_dependency 'rubocop', '~> 0.52.0'
   s.add_development_dependency 'ammeter', '1.1.4'
   s.add_development_dependency 'test-unit'
 end
