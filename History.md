@@ -1,5 +1,5 @@
-dev
-===
+1.0.1 (2018-02-27)
+==================
 
 * Check that db/ exists before running db:schema:load (Olivier Lacan)
   [#157](https://github.com/TalentBox/sequel-rails/pull/157)
