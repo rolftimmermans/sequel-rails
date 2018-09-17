@@ -96,6 +96,22 @@ describe SequelRails::Configuration do
     end
   end
 
+  describe '#test_connect' do
+    it 'defaults to true' do
+      expect(subject.test_connect).to be true
+    end
+
+    it 'can be assigned' do
+      subject.test_connect = true
+      expect(subject.test_connect).to be true
+    end
+
+    it 'can be set from merging another hash' do
+      subject.merge!(:test_connect => true)
+      expect(subject.test_connect).to be true
+    end
+  end
+
   describe '#connect' do
     let(:environments) do
       {
@@ -134,6 +150,22 @@ describe SequelRails::Configuration do
 
     context 'when stubbing SequelRails.jruby?' do
       before { allow(SequelRails).to receive(:jruby?).and_return(is_jruby) }
+
+      shared_examples 'test_connect' do
+        context 'test_connect' do
+          it 'passes the value' do
+            expect(::Sequel).to receive(:connect) do |hash_or_url, *_|
+              if hash_or_url.is_a? Hash
+                expect(hash_or_url[:test]).to eq true
+              else
+                expect(hash_or_url).to include('test=true')
+              end
+            end
+
+            subject.connect environment
+          end
+        end
+      end
 
       shared_examples 'max_connections' do
         context 'with max_connections=7 config option' do
@@ -248,6 +280,7 @@ describe SequelRails::Configuration do
         let(:environment) { 'development' }
 
         context 'in C-Ruby' do
+          include_examples 'test_connect'
           include_examples 'max_connections'
           include_examples 'search_path'
           include_examples 'with DATABASE_URL in ENV'
@@ -263,6 +296,7 @@ describe SequelRails::Configuration do
         end
 
         context 'in JRuby' do
+          include_examples 'test_connect'
           include_examples 'max_connections'
           include_examples 'search_path'
           include_examples 'with DATABASE_URL in ENV'
@@ -296,6 +330,7 @@ describe SequelRails::Configuration do
         let(:environment) { 'remote' }
 
         context 'in C-Ruby' do
+          include_examples 'test_connect'
           include_examples 'max_connections'
           include_examples 'with DATABASE_URL in ENV'
 
@@ -310,6 +345,7 @@ describe SequelRails::Configuration do
         end
 
         context 'in JRuby' do
+          include_examples 'test_connect'
           include_examples 'max_connections'
           include_examples 'with DATABASE_URL in ENV'
 
