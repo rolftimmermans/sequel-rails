@@ -188,6 +188,10 @@ You can configure some options with the usual rails mechanism, in
     # This setting disabled the automatic connect after Rails init
     config.sequel.skip_connect = true
 
+    # Configure if Sequel should try to 'test' the database connection in order
+    # to fail early
+    config.sequel.test_connect = true
+
     # If you want to use a specific logger
     config.sequel.logger = MyLogger.new($stdout)
 ```

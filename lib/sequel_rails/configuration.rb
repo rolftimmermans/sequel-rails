@@ -28,6 +28,7 @@ module SequelRails
       self.load_database_tasks = true
       self.after_connect = nil
       self.skip_connect = nil
+      self.test_connect = true
     end
 
     def environment_for(name)
@@ -72,6 +73,7 @@ module SequelRails
 
       config['max_connections'] = max_connections if max_connections
       config['search_path'] = search_path if search_path
+      config['test'] = test_connect
 
       url = ENV['DATABASE_URL']
       config['url'] ||= url if url
