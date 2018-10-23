@@ -111,11 +111,15 @@ module SequelRails
     end
 
     def check_skip_connect_conditions(app)
-      app.config.sequel[:skip_connect] ||= database_create_command?
+      app.config.sequel[:skip_connect] ||= ENV["SEQUEL_SKIP_CONNECT"] || database_create_command? || asset_compile_command?
     end
 
     def database_connection_required?(app)
       !app.config.sequel[:skip_connect]
+    end
+
+    def asset_compile_command?
+      ["assets:compile", "webpacker:compile"].any? { |c| ARGV.include?(c) }
     end
 
     def database_create_command?
