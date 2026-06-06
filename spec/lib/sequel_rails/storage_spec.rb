@@ -123,4 +123,26 @@ describe SequelRails::Storage do
       end
     end
   end
+  describe '.structure_path' do
+    around do |example|
+      original = ENV['DB_STRUCTURE']
+      example.run
+    ensure
+      if original.nil?
+        ENV.delete('DB_STRUCTURE')
+      else
+        ENV['DB_STRUCTURE'] = original
+      end
+    end
+
+    it 'defaults to db/structure.sql under the Rails root' do
+      ENV.delete('DB_STRUCTURE')
+      expect(described_class.structure_path).to eq(File.join(Rails.root, 'db', 'structure.sql'))
+    end
+
+    it 'uses the DB_STRUCTURE environment variable when set' do
+      ENV['DB_STRUCTURE'] = '/custom/path/structure.sql'
+      expect(described_class.structure_path).to eq('/custom/path/structure.sql')
+    end
+  end
 end

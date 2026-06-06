@@ -23,6 +23,7 @@ module SequelRails
           commands = ['dropdb']
           add_connection_settings commands
           add_flag commands, '--if-exists'
+          add_flag commands, '--force'
           commands << database
           safe_exec commands
         end
@@ -32,9 +33,9 @@ module SequelRails
         with_pgpassword do
           commands = ['pg_dump']
           add_connection_settings commands
-          add_flag commands, '-s'
-          add_flag commands, '-x'
-          add_flag commands, '-O'
+          add_flag commands, '--schema-only'
+          add_flag commands, '--no-privileges'
+          add_flag commands, '--no-owner'
           add_option commands, '--file', filename
           commands << database
           safe_exec commands

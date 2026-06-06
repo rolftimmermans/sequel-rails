@@ -8,6 +8,10 @@ require 'sequel_rails/storage/jdbc'
 
 module SequelRails
   module Storage
+    def self.structure_path
+      ENV['DB_STRUCTURE'] || File.join(Rails.root, 'db', 'structure.sql')
+    end
+
     def self.create_all
       with_local_repositories { |config| create_environment(config) }
     end
