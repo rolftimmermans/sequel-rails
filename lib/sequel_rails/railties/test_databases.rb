@@ -4,22 +4,22 @@ module SequelRails
   module Railties
     module TestDatabases # :nodoc:
       if ActiveSupport.respond_to?(:parallelize_test_databases)
-        require "tempfile"
-        require "sequel_rails/storage"
-        require "active_support/testing/parallelization"
+        require 'tempfile'
+        require 'sequel_rails/storage'
+        require 'active_support/testing/parallelization'
 
         ActiveSupport::Testing::Parallelization.after_fork_hook do |i|
           # On macOS, libpq's TCP connection path logs through the os_log subsystem while
           # establishing a connection. After fork, os_log's per-process state is invalid in
           # the child and the first connection segfaults inside _os_log_preferences_refresh.
           # Disabling os_log activity tracing avoids this.
-          ENV["OS_ACTIVITY_MODE"] = "disable"
+          ENV['OS_ACTIVITY_MODE'] = 'disable'
 
           # Contstruct a worker-specific db config.
           base_config = SequelRails.configuration.environments[Rails.env.to_s]
-          base_database = base_config["database"]
+          base_database = base_config['database']
 
-          db_config = base_config.except("url").merge("database" => "#{base_database}_#{i}")
+          db_config = base_config.except('url').merge('database' => "#{base_database}_#{i}")
 
           Kernel.silence_warnings do
             SequelRails::Storage.drop_environment(db_config)
@@ -29,7 +29,7 @@ module SequelRails
             if base_config.respond_to?(:template)
               # Clone the parent database. This is faster and ensures OIDs and other
               # database-level state is identical.
-              db_config.merge!("template" => base_database, "maintenance_db" => "postgres")
+              db_config.merge!('template' => base_database, 'maintenance_db' => 'postgres')
               SequelRails::Storage.create_environment(db_config)
             else
               # Create a blank worker database and load the schema into it.
@@ -46,7 +46,7 @@ module SequelRails
 
           # TODO: Ideally the logic below is captured in a reconnect() method on the db.
           db.disconnect
-          db.opts[:database] = db_config["database"]
+          db.opts[:database] = db_config['database']
 
           # Re-initialize extensions with the new database connection.
           db.instance_variable_get(:@loaded_extensions).each do |ext|
